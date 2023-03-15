@@ -18,11 +18,6 @@ namespace PracricLibrary
         public Parking(Dictionary<int, Car> cars)
         {
             this.parkingCars = cars;
-
-            /*foreach (var car in parkingCars)
-            {
-                CheckStateNumber(car.Value);
-            }*/
         }
 
         public void AddCar(int numberPlace, Car car)
