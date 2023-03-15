@@ -1,4 +1,5 @@
 using PracricLibrary;
+using System.Reflection;
 
 namespace PracticTests
 {
@@ -69,14 +70,40 @@ namespace PracticTests
 
         private void CheckResult(Dictionary<int, Car> actual, Dictionary<int, Car> expected)
         {
-            for (int i = 0; i < actual.Count; i++)
+            foreach (var car in actual)
             {
-                if (actual.Count != expected.Count) Assert.Fail();
-                if (actual.Keys.Except(expected.Keys).Any()) Assert.Fail();
-                if (expected.Keys.Except(actual.Keys).Any()) Assert.Fail();
-                foreach (var pair in actual)
-                    Assert.Equals(pair.Value, expected[pair.Key]);
+                Assert.IsTrue(car.Value.Equals(expected[car.Key]));
             }
         }
     }
+
+    static class extentions
+    {
+        public static List<Variance> DetailedCompare<T>(this T val1, T val2)
+        {
+            List<Variance> variances = new List<Variance>();
+            var temp = val1.GetType();
+            var temp1 = temp.GetFields();
+            FieldInfo[] fi = temp1;
+            foreach (FieldInfo f in fi)
+            {
+                Variance v = new Variance();
+
+                v.Prop = f.Name;
+                v.valA = f.GetValue(val1);
+                v.valB = f.GetValue(val2);
+
+                if (!Equals(v.valA, v.valB))
+                    variances.Add(v);        
+            }
+            return variances;
+        }       
+    }
+
+    class Variance
+    {
+        public string Prop { get; set; }
+        public object valA { get; set; }
+        public object valB { get; set; }
+    }                    
 }
