@@ -27,33 +27,26 @@ namespace PracricLibrary
 
         public void AddCar(int numberPlace, Car car)
         {
-            CheckStateNumber(car);
+            CheckStateNumber(car.stateNumber);
             CheckNumberPlace(numberPlace);
 
             parkingCars.Add(numberPlace, car);
         }
 
-        private void CheckStateNumber(Car car)
+        private void CheckStateNumber(string stateNumber)
         {
-            if (parkingCars.ContainsValue(car)) throw new Exception("This car is exist!");
-
-            /*foreach (var car in parkingCars)
+            foreach (var car in parkingCars)
             {
                 if (car.Value.stateNumber == stateNumber) throw new Exception("This car is exist!");
-            }*/
+            }
         }
 
         private void CheckNumberPlace(int numberPlace)
         {
             if (parkingCars.ContainsKey(numberPlace)) throw new Exception("This place is occupied!");
-
-            /*foreach (var car in parkingCars)
-            {
-                if (car.Key == numberPlace) throw new Exception("This place is occupied!");
-            }*/
         }
 
-        public Dictionary<int, Car> SearchCarFromColor(string color)
+        public Dictionary<int, Car> GetCarsFromColor(string color)
         {
             var resultCars = new Dictionary<int, Car>();
 
@@ -65,7 +58,7 @@ namespace PracricLibrary
             return resultCars;
         }
 
-        public KeyValuePair<int, Car>? SearchCarFromStateNumber(string stateNumber)
+        public KeyValuePair<int, Car>? GetCarFromStateNumber(string stateNumber)
         {
             foreach (var car in parkingCars)
             {
@@ -75,7 +68,7 @@ namespace PracricLibrary
             return null;
         }
 
-        public Dictionary<int, Car> SearchCarFromOwnerSurname(string surname)
+        public Dictionary<int, Car> GetCarsFromOwnerSurname(string surname)
         {
             var resultCars = new Dictionary<int, Car>();
 
